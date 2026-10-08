@@ -151,6 +151,44 @@ Image Resize(Image& image) {
     return ResizedImage;
 }
 
+Image  imageEdges (Image& image) {
+    grayscale(image);
+
+    for (int j = 0; j < image.height; j++) {
+        for (int i = 0; i < image.width; i++) {
+            if ((i < image.width - 1) && (j < image.height - 1)) {
+                int current = image.getPixel(i,j,0);
+                int right = image.getPixel(i+1,j,1);
+                int below = image.getPixel(i,j+1,2);
+
+                int diff = 20;
+
+                int diffRight = abs(right-current);
+                int diffBelow = abs(below-current);
+
+                if (diffRight > diff || diffBelow > diff) {
+                    for (int k = 0; k < image.channels; k++) {
+                        image.setPixel(i,j,k,0);
+                    }
+                }
+                else {
+                    for (int k = 0; k < image.channels; k++) {
+                        image.setPixel(i,j,k,255);
+                    }
+                }
+
+            }
+            else {
+                for (int k = 0; k < image.channels; k++) {
+                    image.setPixel(i, j, k, 255);
+                }
+            }
+        }
+    }
+
+    return image;
+}
+
 Image wanoSunlight(Image& image) {
     for (int i = 0; i < image.width; ++i) {
         for (int j = 0; j < image.height; ++j) {
@@ -254,7 +292,7 @@ int main() {
         cout << "8. Darken and Lighten Image" << endl;
         cout << "9. Resizing Images" << endl;
         //cout << "10. Merge Images" << endl;
-        //cout << "11. Detect Image Edges" << endl;
+        cout << "11. Detect Image Edges" << endl;
         //cout << "12. Crop Images" << endl;
         //cout << "13. Blur Images" << endl;
         cout << "14. Wano Sunlight" << endl;
@@ -329,7 +367,7 @@ int main() {
                 load = false;
                 break;
             case 11:
-                //image edges
+                image = imageEgdes(image);
                 load = false;
                 break;
             case 12:
