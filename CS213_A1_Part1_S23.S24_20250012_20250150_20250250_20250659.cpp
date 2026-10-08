@@ -89,6 +89,164 @@ Image invertImage(Image &image) {
     return image;
 }
 
+Image AddFrame(Image& image)
+{
+    int choice, color;
+    cout << "Select Frame Type (1: Simple, 2: Fancy)" << endl;
+    cin >> choice;
+    bool isFancy = (choice == 2);
+    cout << "Pick a Frame Color " << endl;
+    cout << "(1: Red, 2: Green, 3: Blue, 4: Yellow, 5: Orange, 6: Purple, 7: Gold, 8: White, 9: Black)" << endl;
+    cin >> color;
+
+    int FrameThickness = min(image.width, image.height) / 30;
+    if (FrameThickness < 15) FrameThickness = 15;
+
+    int gap = 8;
+    int whiteThickness = 5;
+
+    int whiteStart = FrameThickness + gap;
+    int whiteEnd = whiteStart + whiteThickness;
+
+    for (int y = 0; y < image.height; ++y)
+    {
+        for (int x = 0; x < image.width; ++x)
+        {
+            bool isEdge = (x < FrameThickness || x >= image.width - FrameThickness || y < FrameThickness || y >= image.height - FrameThickness);
+
+            if (isEdge)
+            {
+                switch (color)
+                {
+                case 1: { // Red
+                    image(x, y, 0) = 255;
+                    image(x, y, 1) = 0;
+                    image(x, y, 2) = 0;
+                    break;
+                }
+                case 2: { // Green 
+                    image(x, y, 0) = 88;
+                    image(x, y, 1) = 204;
+                    image(x, y, 2) = 138;
+                    break;
+                }
+                case 3: { // Blue
+                    image(x, y, 0) = 0;
+                    image(x, y, 1) = 0;
+                    image(x, y, 2) = 255;
+                    break;
+                }
+                case 4: { // Yellow
+                    image(x, y, 0) = 255;
+                    image(x, y, 1) = 230;
+                    image(x, y, 2) = 0;
+                    break;
+                }
+                case 5: { // Orange
+                    image(x, y, 0) = 255;
+                    image(x, y, 1) = 165;
+                    image(x, y, 2) = 0;
+                    break;
+                }
+                case 6: { // Purple
+                    image(x, y, 0) = 155;
+                    image(x, y, 1) = 107;
+                    image(x, y, 2) = 224;
+                    break;
+                }
+                case 7: { // Gold
+                    image(x, y, 0) = 235;
+                    image(x, y, 1) = 180;
+                    image(x, y, 2) = 20;
+                    break;
+                }
+                case 8: { // White
+                    image(x, y, 0) = 255;
+                    image(x, y, 1) = 255;
+                    image(x, y, 2) = 255;
+                    break;
+                }
+                case 9: { // Black
+                    image(x, y, 0) = 0;
+                    image(x, y, 1) = 0;
+                    image(x, y, 2) = 0;
+                    break;
+                }
+                }
+            }
+            if (isFancy)
+            {
+                bool isStripe = ((x >= whiteStart && x < whiteEnd) || (x >= image.width - whiteEnd && x < image.width - whiteStart)|| (y >= whiteStart && y < whiteEnd) || (y >= image.height - whiteEnd && y < image.height - whiteStart));
+
+                if (isStripe)
+                {
+                    switch (color)
+                    {
+                    case 1: { // Red
+                        image(x, y, 0) = 255;
+                        image(x, y, 1) = 0;
+                        image(x, y, 2) = 0;
+                        break;
+                    }
+                    case 2: { // Green 
+                        image(x, y, 0) = 88;
+                        image(x, y, 1) = 204;
+                        image(x, y, 2) = 138;
+                        break;
+                    }
+                    case 3: { // Blue
+                        image(x, y, 0) = 0;
+                        image(x, y, 1) = 0;
+                        image(x, y, 2) = 255;
+                        break;
+                    }
+                    case 4: { // Yellow
+                        image(x, y, 0) = 255;
+                        image(x, y, 1) = 230;
+                        image(x, y, 2) = 0;
+                        break;
+                    }
+                    case 5: { // Orange
+                        image(x, y, 0) = 255;
+                        image(x, y, 1) = 165;
+                        image(x, y, 2) = 0;
+                        break;
+                    }
+                    case 6: { // Purple
+                        image(x, y, 0) = 155;
+                        image(x, y, 1) = 107;
+                        image(x, y, 2) = 224;
+                        break;
+                    }
+                    case 7: { // Gold
+                        image(x, y, 0) = 235;
+                        image(x, y, 1) = 180;
+                        image(x, y, 2) = 20;
+                        break;
+                    }
+                    case 8: { // White
+                        image(x, y, 0) = 255;
+                        image(x, y, 1) = 255;
+                        image(x, y, 2) = 255;
+                        break;
+                    }
+                    case 9: { // Black
+                        image(x, y, 0) = 0;
+                        image(x, y, 1) = 0;
+                        image(x, y, 2) = 0;
+                        break;
+                    }
+                    }
+                }
+            }
+        }
+    }
+
+    return image;
+}
+
+
+
 Image rotate90 (Image &image) {
     Image image2(image.height, image.width);
 
@@ -246,6 +404,93 @@ Image  imageEdges (Image& image) {
     return image;
 }
 
+Image Blur(Image& image)
+{
+    int radius = 20;
+    int width = image.width;
+    int height = image.height;
+
+    vector<vector<long long>> prefixR(width, vector<long long>(height, 0));
+    vector<vector<long long>> prefixG(width, vector<long long>(height, 0));
+    vector<vector<long long>> prefixB(width, vector<long long>(height,0));
+
+    // 
+    for (int y = 0; y < height; ++y)
+    {
+        for (int x = 0; x < width; ++x)
+        {
+            long long currentR = image(x, y, 0);
+            long long leftR = 0, topR = 0, topLeftR = 0;
+            if (x > 0) leftR = prefixR[x - 1][y];
+            if (y > 0) topR = prefixR[x][y - 1];
+            if (x > 0 && y > 0) topLeftR= prefixR[x - 1][y - 1];
+            prefixR[x][y] = currentR + leftR + topR - topLeftR;
+
+            long long currentG = image(x, y, 1);
+            long long leftG = 0, topG = 0, topLeftG = 0;
+            if (x > 0) leftG = prefixG[x - 1][y];
+            if (y > 0) topG = prefixG[x][y - 1];
+            if (x > 0 && y > 0) topLeftG = prefixG[x - 1][y - 1];
+            prefixG[x][y] = currentG + leftG + topG - topLeftG;
+
+            long long currentB = image(x, y, 2);
+            long long leftB = 0, topB = 0, topLeftB = 0;
+            if (x > 0) leftB = prefixB[x - 1][y];
+            if (y > 0) topB = prefixB[x][y - 1];
+            if (x > 0 && y > 0) topLeftB = prefixB[x - 1][y - 1];
+            prefixB[x][y] = currentB + leftB + topB - topLeftB;
+        }
+    }
+
+    Image blurredImage(width,height);
+
+    for (int y = 0; y < height; ++y)
+    {
+        for (int x = 0; x < width; ++x)
+        {
+            int xLeft = x - radius;
+            int yTop = y - radius;
+            int xRight = x + radius;
+            int yBottom = y + radius;
+
+            if (xLeft < 0) xLeft = 0;
+            if (yTop < 0) yTop = 0;
+            if (xRight >= width) xRight = width - 1;
+            if (yBottom >= height) yBottom = height - 1;
+
+            int boxPixels = (xRight - xLeft + 1) * (yBottom - yTop + 1);
+
+            long long totalR = prefixR[xRight][yBottom];
+            long long leftR = 0, topR = 0, topLeftR = 0;
+            if (xLeft > 0) leftR = prefixR[xLeft - 1][yBottom];
+            if (yTop > 0) topR = prefixR[xRight][yTop - 1];
+            if (xLeft > 0 && yTop > 0) topLeftR = prefixR[xLeft - 1][yTop - 1];
+
+            long long totalG = prefixG[xRight][yBottom];
+            long long leftG = 0, topG = 0, topLeftG = 0;
+            if (xLeft > 0) leftG = prefixG[xLeft - 1][yBottom];
+            if (yTop > 0) topG = prefixG[xRight][yTop - 1];
+            if (xLeft > 0 && yTop > 0) topLeftG = prefixG[xLeft - 1][yTop - 1];
+
+            long long totalB = prefixB[xRight][yBottom];
+            long long leftB = 0, topB = 0, topLeftB = 0;
+            if (xLeft > 0) leftB = prefixB[xLeft - 1][yBottom];
+            if (yTop > 0) topB = prefixB[xRight][yTop - 1];
+            if (xLeft > 0 && yTop > 0) topLeftB = prefixB[xLeft - 1][yTop - 1];
+
+            long long sumR = totalR - leftR - topR + topLeftR;
+            long long sumG = totalG - leftG - topG + topLeftG;
+            long long sumB = totalB - leftB - topB + topLeftB;
+
+            blurredImage(x, y, 0) = (unsigned char)(sumR / boxPixels);
+            blurredImage(x, y, 1) = (unsigned char)(sumG / boxPixels);
+            blurredImage(x, y, 2) = (unsigned char)(sumB / boxPixels);
+        }
+    }
+
+    return blurredImage;
+}
+
 Image wanoSunlight(Image& image) {
     for (int i = 0; i < image.width; ++i) {
         for (int j = 0; j < image.height; ++j) {
@@ -345,7 +590,7 @@ int main() {
         cout << "2. Grayscale Conversion" << endl;
         cout << "3. Black and White" << endl;
         cout << "4. Invert Image" << endl;
-        //cout << "5. Adding Frame to the Picture" << endl;
+        cout << "5. Adding Frame to the Picture" << endl;
         //cout << "6. Flip Image" << endl;
         cout << "7. Rotate Image" << endl;
         cout << "8. Darken and Lighten Image" << endl;
@@ -353,7 +598,7 @@ int main() {
         //cout << "10. Merge Images" << endl;
         cout << "11. Detect Image Edges" << endl;
         //cout << "12. Crop Images" << endl;
-        //cout << "13. Blur Images" << endl;
+        cout << "13. Blur Images" << endl;
         cout << "14. Wano Sunlight" << endl;
         cout << "15. Old TV" << endl;
         //cout << "16. Purple Wano" << endl;
