@@ -30,7 +30,7 @@
 
 
 
-#include "image_class.h"
+#include "Image_Class.h"
 #include <algorithm>
 #include <vector>
 #include <iostream>
