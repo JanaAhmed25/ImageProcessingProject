@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.20)
+project(ImageProcessingProject)
+
+set(CMAKE_CXX_STANDARD 17)
+
+add_executable(ImageProcessingProject CS213_A1_Part1_S23.S24_20250012_20250150_20250250_20250659.cpp)

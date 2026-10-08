@@ -367,7 +367,7 @@ int main() {
                 load = false;
                 break;
             case 11:
-                image = imageEgdes(image);
+                image = imageEdges(image);
                 load = false;
                 break;
             case 12:
