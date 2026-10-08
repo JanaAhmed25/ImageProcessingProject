@@ -31,6 +31,8 @@
 
 
 #include "image_class.h"
+#include <algorithm>
+#include <vector>
 #include <iostream>
 using namespace std;
 
