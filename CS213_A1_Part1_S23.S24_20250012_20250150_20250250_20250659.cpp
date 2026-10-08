@@ -647,7 +647,7 @@ int main() {
                 load = false;
                 break;
             case 5:
-                //frame
+                image = AddFrame(image);
                 load = false;
                 break;
             case 6:
@@ -693,7 +693,7 @@ int main() {
                 load = false;
                 break;
             case 13:
-                //blur
+                image = Blur(image);
                 load = false;
                 break;
             case 14:
