@@ -405,6 +405,39 @@ Image  imageEdges (Image& image) {
 
     return image;
 }
+Image crop(Image &image)
+{
+    int x, y;
+    int W, H;
+
+    cout << "Enter X: "; 
+    cin >> x;
+
+    cout << "Enter Y: "; 
+    cin >> y;
+
+    cout << "Enter the width of the area you want to crop: ";
+    cin >> W;
+
+    cout << "Enter the height of the area you want to crop: ";
+    cin >> H;
+
+    Image cropped(W, H);
+
+    for (int i = 0; i < W; i++)
+    {
+        for (int j = 0; j < H; j++)
+        {
+            for (int k = 0; k < 3; k++)
+            {
+                cropped.setPixel(i, j, k,
+                    image.getPixel(x + i, y + j, k));
+            }
+        }
+    }
+
+    return cropped;
+}
 
 Image Blur(Image& image)
 {
