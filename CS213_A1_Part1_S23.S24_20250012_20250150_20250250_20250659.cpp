@@ -89,6 +89,63 @@ Image invertImage(Image &image) {
     return image;
 }
 
+Image rotate90 (Image &image) {
+    Image image2(image.height, image.width);
+
+    for (int j = 0; j < image.height; j++) {
+        for (int i = 0; i < image.width; i++) {
+            int new_i = image.height -1 -j;
+            int new_j = i;
+
+            for (int k = 0; k < image.channels; k++) {
+                int value = image.getPixel(i, j,k);
+                image2.setPixel(new_i, new_j, k, value);
+            }
+        }
+    }
+    image = image2;
+
+    return image;
+}
+
+Image rotate180(Image &image) {
+    Image image2(image.width, image.height);
+
+    for (int j = 0; j < image.height; j++) {
+        for (int i = 0; i < image.width; i++) {
+            int new_i = image.width -1 -i;
+            int new_j = image.height -1 -j;
+
+            for (int k = 0; k < image.channels; k++) {
+                int value = image.getPixel(i, j,k);
+                image2.setPixel(new_i, new_j, k, value);
+            }
+        }
+    }
+    image = image2;
+
+    return image;
+}
+
+Image rotate270(Image &image) {
+    Image image2(image.height, image.width);
+
+    for (int j = 0; j < image.height; j++) {
+        for (int i = 0; i < image.width; i++) {
+            int new_i = j;
+            int new_j = image.width -1 -i;
+
+            for (int k = 0; k < image.channels; k++) {
+                int value = image.getPixel(i, j,k);
+                image2.setPixel(new_i, new_j, k, value);
+            }
+        }
+    }
+    image = image2;
+
+    return image;
+}
+
 Image darkenAndLighten (Image &image) {
     int choice;
     cout << " options:\n brighter : 1 \n darker : 2\n";
@@ -280,6 +337,8 @@ int main() {
     bool running = true;
     bool load = true;
 
+    int rotate = 0;
+
     while (running) {
         cout << "--- MENU ---" << endl;
         cout << "1. Load a new image" << endl;
@@ -288,7 +347,7 @@ int main() {
         cout << "4. Invert Image" << endl;
         //cout << "5. Adding Frame to the Picture" << endl;
         //cout << "6. Flip Image" << endl;
-        //cout << "7. Rotate Image" << endl;
+        cout << "7. Rotate Image" << endl;
         cout << "8. Darken and Lighten Image" << endl;
         cout << "9. Resizing Images" << endl;
         //cout << "10. Merge Images" << endl;
@@ -351,7 +410,21 @@ int main() {
                 load = false;
                 break;
             case 7:
-                //rotate
+                while (rotate != 90 && rotate != 270 && rotate != 180) {
+                    cout << "rotate 90, 180 or 270? ";
+                    cin >> rotate;
+                }
+                switch (rotate) {
+                    case 90:
+                        image = rotate90(image);
+                        break;
+                    case 180:
+                        image = rotate180(image);
+                        break;
+                    case 270:
+                        image = rotate270(image);
+                        break;
+                }
                 load = false;
                 break;
             case 8:
