@@ -620,7 +620,36 @@ Image oldTV(Image &image) {
     }
     return image;
 }
+Image purpleWano(Image &image)
+{
+    for (int i = 0; i < image.width; i++)
+    {
+        for (int j = 0; j < image.height; j++)
+        {
+            for (int k = 0; k < 3; k++)
+            {
+                int newValue = image.getPixel(i, j, k);
 
+                if (k == 0)
+                    newValue = newValue * 1.2;
+                else if (k == 1)
+                    newValue = newValue * 0.7;
+                else if (k == 2)
+                    newValue = newValue * 1.3;
+
+                if (newValue > 255)
+                    newValue = 255;
+
+                if (newValue < 0)
+                    newValue = 0;
+
+                image.setPixel(i, j, k, newValue);
+            }
+        }
+    }
+
+    return image;
+}
 Image Infrared(Image& image)
 {
     for (int y = 0; y < image.height; ++y)
