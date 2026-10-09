@@ -247,7 +247,42 @@ Image AddFrame(Image& image)
     return image;
 }
 
+Image Flip(Image &image) {
+   string o;
+   Image tempFile(image.width, image.height);
+   bool checkA = true;
+    while (checkA){
+   cout << "Horizontal or Vertical ?" << endl;
+   cin >> o;
+   if ((o == "vertical") || (o =="Vertical") || (o == " vertical") || (o ==" Vertical") || (o == "vertical ") || (o =="Vertical ")){
+        for (int i = 0; i < image.width; ++i) {
+            for (int j = 0; j < image.height; ++j) {
+                for (int k = 0; k < image.channels; ++k) {
+                    tempFile(i, j, k) = image(i, image.height - 1 - j, k);
+                }
+            }
+        }
+        image = tempFile;
+        checkA = false;
 
+}
+    else if ((o == "horizontal") || (o =="Horizontal") || (o == " horizontal") || (o ==" Horizontal") || (o == "horizontal ") || (o == "Horizontal ")){
+        for (int i = 0; i < image.width; ++i) {
+            for (int j = 0; j < image.height; ++j) {
+                for (int k = 0; k < image.channels; ++k) {
+                    tempFile(i, j, k) = image(image.width - 1 - i, j, k);
+                }
+            }
+        }
+        image = tempFile;
+        checkA = false;
+}
+    else {
+        cout << "Wrong answer!" << endl;
+    }
+}
+return image;
+}
 
 Image rotate90 (Image &image) {
     Image image2(image.height, image.width);
@@ -367,6 +402,33 @@ Image Resize(Image& image) {
     }
     return ResizedImage;
 }
+
+Image Merge(Image &image) {
+      string otherName;
+        cout << "What is your other image name?" << endl;
+        cin >> otherName;
+
+        Image theOtherPic(otherName);
+
+
+        int w = min(image.width, theOtherPic.width);
+        int h = min(image.height, theOtherPic.height);
+        int ch = min(image.channels, theOtherPic.channels);
+
+        Image aNeWPic(w, h);
+
+        for (int i = 0; i < w; ++i) {
+            for (int j = 0; j < h; ++j) {
+                for (int k = 0; k < ch; ++k) {
+                    aNeWPic(i, j, k) = (image(i, j, k) + theOtherPic(i, j, k)) / 2;
+                }
+            }
+        }
+        image = aNeWPic;
+        return image;
+    }
+
+
 
 Image  imageEdges (Image& image) {
     grayscale(image);
@@ -558,7 +620,36 @@ Image oldTV(Image &image) {
     }
     return image;
 }
+Image purpleWano(Image &image)
+{
+    for (int i = 0; i < image.width; i++)
+    {
+        for (int j = 0; j < image.height; j++)
+        {
+            for (int k = 0; k < 3; k++)
+            {
+                int newValue = image.getPixel(i, j, k);
 
+                if (k == 0)
+                    newValue = newValue * 1.2;
+                else if (k == 1)
+                    newValue = newValue * 0.7;
+                else if (k == 2)
+                    newValue = newValue * 1.3;
+
+                if (newValue > 255)
+                    newValue = 255;
+
+                if (newValue < 0)
+                    newValue = 0;
+
+                image.setPixel(i, j, k, newValue);
+            }
+        }
+    }
+
+    return image;
+}
 Image Infrared(Image& image)
 {
     for (int y = 0; y < image.height; ++y)
@@ -628,11 +719,11 @@ int main() {
         cout << "3. Black and White" << endl;
         cout << "4. Invert Image" << endl;
         cout << "5. Adding Frame to the Picture" << endl;
-        //cout << "6. Flip Image" << endl;
+        cout << "6. Flip Image" << endl;
         cout << "7. Rotate Image" << endl;
         cout << "8. Darken and Lighten Image" << endl;
         cout << "9. Resizing Images" << endl;
-        //cout << "10. Merge Images" << endl;
+        cout << "10. Merge Images" << endl;
         cout << "11. Detect Image Edges" << endl;
         cout << "12. Crop Images" << endl;
         cout << "13. Blur Images" << endl;
@@ -688,7 +779,7 @@ int main() {
                 load = false;
                 break;
             case 6:
-                //flip
+                image = Flip(image);
                 load = false;
                 break;
             case 7:
@@ -718,7 +809,7 @@ int main() {
                 load = false;
                 break;
             case 10:
-                //merge
+                image = Merge(image);
                 load = false;
                 break;
             case 11:
