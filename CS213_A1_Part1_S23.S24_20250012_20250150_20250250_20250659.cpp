@@ -670,6 +670,43 @@ Image Infrared(Image& image)
 
     return image;
 }
+Image skew(Image &image)
+{
+    double angle;
+
+    cout << "Please enter skew angle from 0 to less than 90:\n";
+    cin >> angle;
+
+    while (angle < 0 || angle >= 90)
+    {
+        cout << "Wrong angle! Enter an angle from 0 to less than 90:\n";
+        cin >> angle;
+    }
+
+    double radians = angle * 3.14159 / 180;
+    double factor = tan(radians);
+
+    int extra_width = (image.height - 1) * factor;
+
+    Image new_image(image.width + extra_width, image.height);
+
+    for (int i = 0; i < image.width; i++)
+    {
+        for (int j = 0; j < image.height; j++)
+        {
+            int shift = (image.height - 1 - j) * factor;
+            int new_x = i + shift;
+
+            for (int k = 0; k < 3; k++)
+            {
+                int color = image.getPixel(i, j, k);
+                new_image.setPixel(new_x, j, k, color);
+            }
+        }
+    }
+
+    return new_image;
+}
 
 void save(Image &image) {
     bool t = true;
