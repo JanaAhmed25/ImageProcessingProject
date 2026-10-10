@@ -708,6 +708,118 @@ Image skew(Image &image)
     return new_image;
 }
 
+Image oilPainting(Image &image) {
+    int width = image.width;
+    int height = image.height;
+    int totalPixels = width * height;
+
+    int brushRadius = max(3, min(width, height) / 400);
+    int numColorGroups = 16;
+
+    vector<unsigned char> pixelGroup(totalPixels);
+    for (int row = 0; row < height; ++row)
+    {
+        for (int column = 0; column < width; ++column)
+        {
+            int brightness = (image(column, row, 0) + image(column, row, 1) + image(column, row, 2)) / 3;
+            pixelGroup[row * width + column] = brightness * numColorGroups / 256;
+        }
+    }
+
+    vector<int> bigGroup(totalPixels, 0);
+    vector<unsigned char> paintedRed(totalPixels);
+    vector<unsigned char> paintedGreen(totalPixels);
+    vector<unsigned char> paintedBlue(totalPixels);
+
+    vector<unsigned int> countTable((width + 1) * (height + 1), 0);
+    vector<unsigned int> redTable((width + 1) * (height + 1), 0);
+    vector<unsigned int> greenTable((width + 1) * (height + 1), 0);
+    vector<unsigned int> blueTable((width + 1) * (height + 1), 0);
+
+    for (int currentGroup = 0; currentGroup < numColorGroups; ++currentGroup)
+    {
+        for (int row = 1; row <= height; ++row)
+        {
+            for (int column = 1; column <= width; ++column)
+            {
+                int pixelIndex = (row - 1) * width + (column - 1);
+
+                unsigned int countValue = 0;
+                unsigned int redValue = 0;
+                unsigned int greenValue = 0;
+                unsigned int blueValue = 0;
+
+                if (pixelGroup[pixelIndex] == currentGroup)
+                {
+                    countValue = 1;
+                    redValue = image(column - 1, row - 1, 0);
+                    greenValue = image(column - 1, row - 1, 1);
+                    blueValue = image(column - 1, row - 1, 2);
+                }
+
+                int currentCell = row * (width + 1) + column;
+                int cellToLeft = currentCell - 1;
+                int cellAbove = currentCell - (width + 1);
+                int cellAboveLeft = cellAbove - 1;
+
+                countTable[currentCell] = countValue + countTable[cellToLeft] + countTable[cellAbove] - countTable[cellAboveLeft];
+                redTable[currentCell] = redValue + redTable[cellToLeft] + redTable[cellAbove] - redTable[cellAboveLeft];
+                greenTable[currentCell] = greenValue + greenTable[cellToLeft] + greenTable[cellAbove] - greenTable[cellAboveLeft];
+                blueTable[currentCell] = blueValue + blueTable[cellToLeft] + blueTable[cellAbove] - blueTable[cellAboveLeft];
+            }
+        }
+
+        for (int row = 0; row < height; ++row)
+        {
+            int boxTop = max(0, row - brushRadius);
+            int boxBottom = min(height - 1, row + brushRadius) + 1;
+
+            for (int column = 0; column < width; ++column)
+            {
+                int boxLeft = max(0, column - brushRadius);
+                int boxRight = min(width - 1, column + brushRadius) + 1;
+
+                int bottomRightCorner = boxBottom * (width + 1) + boxRight;
+                int topRightCorner = boxTop * (width + 1) + boxRight;
+                int bottomLeftCorner = boxBottom * (width + 1) + boxLeft;
+                int topLeftCorner = boxTop * (width + 1) + boxLeft;
+
+                unsigned int groupSizeInBox = countTable[bottomRightCorner] - countTable[topRightCorner]
+                    - countTable[bottomLeftCorner] + countTable[topLeftCorner];
+
+                int pixelIndex = row * width + column;
+
+                if ((int)groupSizeInBox > bigGroup[pixelIndex])
+                {
+                    bigGroup[pixelIndex] = groupSizeInBox;
+
+                    paintedRed[pixelIndex] = (redTable[bottomRightCorner] - redTable[topRightCorner]
+                        - redTable[bottomLeftCorner] + redTable[topLeftCorner]) / groupSizeInBox;
+                    paintedGreen[pixelIndex] = (greenTable[bottomRightCorner] - greenTable[topRightCorner]
+                        - greenTable[bottomLeftCorner] + greenTable[topLeftCorner]) / groupSizeInBox;
+                    paintedBlue[pixelIndex] = (blueTable[bottomRightCorner] - blueTable[topRightCorner]
+                        - blueTable[bottomLeftCorner] + blueTable[topLeftCorner]) / groupSizeInBox;
+                }
+            }
+        }
+    }
+
+    Image paintedImage(width, height);
+    for (int row = 0; row < height; ++row)
+    {
+        for (int column = 0; column < width; ++column)
+        {
+            int pixelIndex = row * width + column;
+            paintedImage(column, row, 0) = paintedRed[pixelIndex];
+            paintedImage(column, row, 1) = paintedGreen[pixelIndex];
+            paintedImage(column, row, 2) = paintedBlue[pixelIndex];
+        }
+    }
+
+    image = paintedImage;
+    return image;
+}
+
 void save(Image &image) {
     bool t = true;
     while (t){
@@ -766,10 +878,10 @@ int main() {
         cout << "13. Blur Images" << endl;
         cout << "14. Wano Sunlight" << endl;
         cout << "15. Old TV" << endl;
-        //cout << "16. Purple Wano" << endl;
+        cout << "16. Purple Wano" << endl;
         cout << "17. Infrared" << endl;
-        //cout << "18. Image Skewing Filter" << endl;
-        //cout << "19. Oil Painting" << endl;
+        cout << "18. Image Skewing Filter" << endl;
+        cout << "19. Oil Painting" << endl;
         cout << "20. Save" << endl;
         cout << "21. Exit" << endl;
         cout << "Choose an option: ";
@@ -870,7 +982,7 @@ int main() {
                 load = false;
                 break;
             case 16:
-                //purple
+                image = purpleWano(image);
                 load = false;
                 break;
             case 17:
@@ -878,11 +990,11 @@ int main() {
                 load = false;
                 break;
             case 18:
-                //skewing
+                image = skew(image);
                 load = false;
                 break;
             case 19:
-                //oil painting
+                image = oilPainting(image);
                 load = false;
                 break;
             case 20:
