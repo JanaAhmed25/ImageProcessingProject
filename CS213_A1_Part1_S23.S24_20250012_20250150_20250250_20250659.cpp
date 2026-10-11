@@ -1,24 +1,25 @@
 /*
- *CS213_A1_Part1_S23.S24_20250012_20250150_20250250_20250659.cpp
+ *CS213_A1_Part1_S5.S6_20250012_20250150_20250250_20250659.cpp
  *
  *اقسم بالله أن هذا الكود من عمل الفريق 100% بلا نسخ من اي مصدر أو تخليق بالAI
  *
  *
- * Name: Ahmed Osama Mohamed
- * ID: 20250012
- * Filters done: Filter 1 (Grayscale), Filter 13 (Wano Sunlight)
- *
- * Name: Jana Ahmed Taha Hassan
- * ID: 20250150
- * Filters done: Filter 2 (Black and White), Filter 14 (Old TV)
- *
- * Name: Ziad Abd Rabo Kamel
- * ID: 20250250
- * Filters done: Filter 3 (Invert Image), Filter 7 (Darken and Lighten Image)
- *
- * Name: Malak Usama Mohamed Rashad
- * ID: 20250659
- * Filters done: Filter 8 (Resizing Images), Filter 16 (Infrared)
+*Name: Ahmed Osama Mohamed
+ID: 20250012
+Filters done: Filter 1 (Grayscale), Filter 5 (Flip Image), Filter 9 (Merge Images), Filter 13 (Wano Sunlight), GUI
+
+Name: Jana Ahmed Taha Hassan
+ID: 20250150
+Filters done: Filter 2 (Black and White), Filter 6 (Rotate Image), Filter 10 (Detect Image Edges), Filter 14 (Old TV), Filter 18 (Oil Painting)
+
+Name: Ziad Abd Rabo Kamel
+ID: 20250250
+Filters done: Filter 3 (Invert Image), Filter 7 (Darken and Lighten Image), Filter 11 (Crop Images), Filter 15 (Purple Wano), Filter 17 (Image Skewing Filter)
+
+Name: Malak Usama Mohamed Rashad
+ID: 20250659
+Filters done: Filter 4 (Adding A Frame to the Picture), Filter 8 (Resizing Images),  Filter 12 (Blur Images), Filter 16 (Infrared), Filter 18 (Oil Painting)
+
  *
  *
  *
