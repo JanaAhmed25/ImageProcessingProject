@@ -1,5 +1,5 @@
 /*
- *CS213_A1_Part1_S5.S6_20250012_20250150_20250250_20250659.cpp
+ *CS213_A1_Part2_S5.S6_20250012_20250150_20250250_20250659.cpp
  *
  *اقسم بالله أن هذا الكود من عمل الفريق 100% بلا نسخ من اي مصدر أو تخليق بالAI
  *
@@ -833,7 +833,7 @@ void save(Image &image) {
             t = false;
         }
         else if (s1 == "n") {
-            cout << "Choose the new filename to save your new image and specify extension .jpg, .jpeg, .bmp, .png, .tga: " ;
+            cout << "Choose the new filename to save your new image and specify extension .jpg, .jpeg, .bmp, .png: " ;
             cin >> filename2;
             if (image.saveImage(filename2)) {
                 cout << "image saved successfully" << endl;

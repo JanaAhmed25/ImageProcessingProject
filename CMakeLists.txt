@@ -3,4 +3,4 @@ project(ImageProcessingProject)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(ImageProcessingProject CS213_A1_Part2_S5.S6_20250012_20250150_20250250_20250659.cpp_S23.S24_20250012_20250150_20250250_20250659.cpp)
+add_executable(ImageProcessingProject CS213_A1_Part2_S5.S6_20250012_20250150_20250250_20250659.cpp)
