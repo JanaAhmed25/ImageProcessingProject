@@ -6,21 +6,21 @@
  *
 *Name: Ahmed Osama Mohamed
 ID: 20250012
-Filters done: Filter 1 (Grayscale), Filter 5 (Flip Image), Filter 9 (Merge Images), Filter 13 (Wano Sunlight), GUI
+Filters done: Filter 1 (Grayscale), Filter 5 (Flip Image), Filter 9 (Merge Images), Filter 13 (Wano Sunlight)
 
 Name: Jana Ahmed Taha Hassan
 ID: 20250150
-Filters done: Filter 2 (Black and White), Filter 6 (Rotate Image), Filter 10 (Detect Image Edges), Filter 14 (Old TV), Filter 18 (Oil Painting)
+Filters done: Filter 2 (Black and White), Filter 6 (Rotate Image), Filter 10 (Detect Image Edges), Filter 14 (Old TV)
 
 Name: Ziad Abd Rabo Kamel
 ID: 20250250
-Filters done: Filter 3 (Invert Image), Filter 7 (Darken and Lighten Image), Filter 11 (Crop Images), Filter 15 (Purple Wano), Filter 17 (Image Skewing Filter)
+Filters done: Filter 3 (Invert Image), Filter 7 (Darken and Lighten Image), Filter 11 (Crop Images), Filter 15 (Purple Wano)
 
 Name: Malak Usama Mohamed Rashad
 ID: 20250659
-Filters done: Filter 4 (Adding A Frame to the Picture), Filter 8 (Resizing Images),  Filter 12 (Blur Images), Filter 16 (Infrared), Filter 18 (Oil Painting)
+Filters done: Filter 4 (Adding A Frame to the Picture), Filter 8 (Resizing Images),  Filter 12 (Blur Images), Filter 16 (Infrared)
 
- *
+ *GUI & Bonus Filters are common between all members
  *
  *
  *
