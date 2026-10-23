@@ -106,10 +106,10 @@ Image AddFrame(Image& image)
     if (FrameThickness < 15) FrameThickness = 15;
 
     int gap = 8;
-    int whiteThickness = 5;
+    int stripeThickness = 5;
 
-    int whiteStart = FrameThickness + gap;
-    int whiteEnd = whiteStart + whiteThickness;
+    int stripeStart = FrameThickness + gap;
+    int stripeEnd = stripeStart + stripeThickness;
 
     for (int y = 0; y < image.height; ++y)
     {
@@ -179,7 +179,7 @@ Image AddFrame(Image& image)
             }
             if (isFancy)
             {
-                bool isStripe = ((x >= whiteStart && x < whiteEnd) || (x >= image.width - whiteEnd && x < image.width - whiteStart)|| (y >= whiteStart && y < whiteEnd) || (y >= image.height - whiteEnd && y < image.height - whiteStart));
+                bool isStripe = ((x >= stripeStart && x < stripeEnd) || (x >= image.width - stripeEnd && x < image.width - stripeStart)|| (y >= stripeStart && y < stripeEnd) || (y >= image.height - stripeEnd && y < image.height - stripeStart));
 
                 if (isStripe)
                 {
@@ -429,8 +429,6 @@ Image Merge(Image &image) {
         return image;
     }
 
-
-
 Image  imageEdges (Image& image) {
     grayscale(image);
 
@@ -470,6 +468,7 @@ Image  imageEdges (Image& image) {
 
     return image;
 }
+
 Image crop(Image &image)
 {
     int x, y;
@@ -651,6 +650,7 @@ Image purpleWano(Image &image)
 
     return image;
 }
+
 Image Infrared(Image& image)
 {
     for (int y = 0; y < image.height; ++y)
